@@ -6,28 +6,17 @@
 /*   By: malancar <malancar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 17:57:27 by malancar          #+#    #+#             */
-/*   Updated: 2024/03/20 17:10:11 by malancar         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:53:54 by malancar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/cub3d.h"
 
-void	rgb_to_hexa(char **tab, int color[3])
+int		rgb_to_int(int red, int green, int blue)
 {
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		color[i] = ft_atoi(tab[i]);
-		printf("%s\n", tab[i]);
-		printf("color = %d\n", color[i]);
-		color[i] = color[i] / 16;
-		printf("color = %d\n", color[i]);
-
-		i++;
-	}
+	return((red << 16) | (green << 8) | blue);
 }
+
 
 int	count_nbr(char *str)
 {
@@ -80,7 +69,7 @@ int	is_digit(char **tab)
 	return (1);
 }
 
-void	parse_color(char *color, t_data *data, int *color_rgb)
+int	parse_color(char *color, t_data *data)
 {
 	int		i;
 	char	**tab;
@@ -104,6 +93,6 @@ digit between 000,000,000 and : 255,255,255\n", 1, data);
 		free_texture_path("Error:4 Color not valid, expected RGB color, \
 digit between 000,000,000 and : 255,255,255\n", 1, data);
 	}
-	rgb_to_hexa(tab, color_rgb);
-	free_tab(tab, i, data, 0);
+	//free_tab(tab, i, data, 0);
+	return(rgb_to_int(ft_atoi(tab[0]), ft_atoi(tab[1]), ft_atoi(tab[2])));
 }
