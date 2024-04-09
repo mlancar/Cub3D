@@ -54,7 +54,7 @@ int	tab_size(char **tab)
 	return (i);
 }
 
-int	count_line(char *file_name, t_data *data)
+int	count_line(char *file_name, t_data *data, int old_fd)
 {
 	int		fd;
 	int		i;
@@ -66,8 +66,9 @@ int	count_line(char *file_name, t_data *data)
 	if (!line)
 	{
 		free(line);
+		close(old_fd);
 		close(fd);
-		error_msg("Error: line is invalide\n", 1, data);
+		error_msg("Error\nline is invalide\n", 1, data);
 	}
 	while (line)
 	{
@@ -95,17 +96,3 @@ int	copy_tab(char **dest, char **src, t_data *data)
 	dest[i] = 0;
 	return (1);
 }
-
-//DEBUG
-void	print_map_info(t_data *data)
-{
-	printf("%s\n", data->texture.ceiling_color);
-	printf("%s\n", data->texture.floor_color);
-	printf("%s\n", data->texture.no_path);
-	printf("%s\n", data->texture.so_path);
-	printf("%s\n", data->texture.ea_path);
-	printf("%s\n", data->texture.we_path);
-	for (int i = 0; data->map.file[i]; i++)
-		printf("%s\n", data->map.file[i]);
-}
-

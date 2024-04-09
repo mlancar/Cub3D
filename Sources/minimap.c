@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malancar <malancar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouquie <lsouquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:14:06 by malancar          #+#    #+#             */
-/*   Updated: 2024/03/20 17:58:27 by malancar         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:15:17 by lsouquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ void	init_square_size(t_data *data)
 		data->map.square_size = (data->win_height * ZOOM) / height;
 }
 
-void	print_square(t_data *data, int start_width, int end_width, int start_height, int end_height, int color)
+void	print_square(t_data *data, int start_width, int start_height, int color)
 {
 	int	tmp;
+	int	end_width;
+	int	end_height;
 
+	end_height = start_height + data->map.square_size;
+	end_width = start_width + data->map.square_size;
 	tmp = start_width;
 	while (end_height <= data->win_height && start_height <= end_height)
 	{
@@ -47,12 +51,8 @@ void	mini_map(t_data *data)
 {
 	int	i;
 	int	j;
-	int	x;
-	int	y;
 
 	i = 0;
-	x = floor(data->player.x);
-	y = floor(data->player.y);
 	init_square_size(data);
 	data->img.height = 0;
 	while (data->map.file[i])
@@ -62,15 +62,11 @@ void	mini_map(t_data *data)
 		while (data->map.file[i][j])
 		{
 			if (data->map.file[i][j] == '1')
-				print_square(data, data->img.width, data->img.width + data->map.square_size, data->img.height, data->img.height + data->map.square_size, RED);
-			else if (data->map.file[i][j] == ' ')
-				print_square(data, data->img.width, data->img.width + data->map.square_size, data->img.height, data->img.height + data->map.square_size, BLACK);
-			else
-				print_square(data, data->img.width, data->img.width + data->map.square_size, data->img.height, data->img.height + data->map.square_size, GREEN);
-			if (i == y && j == x)
-			{	
-				print_square(data, data->img.width, data->img.width + data->map.square_size, data->img.height, data->img.height + data->map.square_size, BLACK);
-			}
+				print_square(data, data->img.width, data->img.height, RED);
+			else if (data->map.file[i][j] != ' ')
+				print_square(data, data->img.width, data->img.height, GREEN);
+			if (i == floor(data->player.y) && j == floor(data->player.x))
+				print_square(data, data->img.width, data->img.height, BLACK);
 			j++;
 			data->img.width += data->map.square_size;
 		}
@@ -115,5 +111,4 @@ void	mini_map_rays(t_data *data)
 	}
 	free(data->ray.angles);
 	free(data->ray.inter_points_x);
-	free(data->ray.inter_points_y);
 }

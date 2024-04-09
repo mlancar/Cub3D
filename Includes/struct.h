@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsouquie <lsouquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 18:23:58 by lsouquie          #+#    #+#             */
+/*   Updated: 2024/03/22 18:23:58 by lsouquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCT_H
 # define STRUCT_H
 
@@ -10,14 +22,9 @@ typedef struct s_img
 	int		width;
 	int		height;
 	int		endian;
-	char	*path;
 	int		allow;
+	int		print;
 }			t_img;
-
-typedef struct s_sprite
-{
-
-}			t_sprite;
 
 typedef struct s_texture
 {
@@ -33,43 +40,39 @@ typedef struct s_texture
 	t_img	we_texture;
 	double	pixel_y;
 	double	pixel_x;
+	char	*ref[7];
+	int		texture_count[7];
 	int		count;
 
-} t_texture;
+}		t_texture;
 
 typedef struct s_map
 {
+	double	angle;
 	char	**file;
 	int		height;
-	int 	width;
+	int		width;
 	double	spawn_x;
 	double	spawn_y;
 	char	spawn_side;
 	int		square_size;
-	int		ceiling_color[3];
-	int		floor_color[3];
-} t_map;
+	int		ceiling_color;
+	int		floor_color;
+	int		spawn_count;
+}	t_map;
 
-typedef	struct s_player
+typedef struct s_player
 {
 	double		x;
 	double		y;
-	double		center_x;
-	double		center_y;
-	double	fov;//field of view in radians
-	double	angle;
-	float	move_speed;
-	double	dirx;
-	double	diry;
-	//int		rotation_flag;
-	//int		left_rotation;
-	//int		right_rotation;
-} t_player;
+	double		fov;
+	double		angle;
+	float		move_speed;
+}	t_player;
 
-typedef	struct s_ray
+typedef struct s_ray
 {
 	double	*inter_points_x;
-	double	*inter_points_y;
 	double	*angles;
 	double	h_inter_x;
 	double	h_inter_y;
@@ -80,15 +83,8 @@ typedef	struct s_ray
 	int		is_horizontal;
 	double	distance;
 	double	angle;
-	double	a;
-	double	b;
 	int		x;
 	int		y;
-	int		center;
-	int		start_height;
-	int		start_width;
-	int		end_height;
-	int		end_width;
 	int		ray_index;
 	double	dirx;
 	double	diry;
@@ -107,7 +103,6 @@ typedef struct s_data
 	t_map		map;
 	t_img		img;
 	t_texture	texture;
-	t_sprite	sprites;
 	t_player	player;
 }				t_data;
 

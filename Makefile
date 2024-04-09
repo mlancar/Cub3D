@@ -1,12 +1,14 @@
 NAME		= cub3D
 	
 CC			= cc
-FLAGS		= -Wall -Wextra -Werror -g3 -O3
+FLAGS		= -Wall -Wextra -Werror -g3 -O3 #-fsanitize=address
 RM			= rm -rf
 
 OBJDIR = .objFiles
 
-FILES		= main parsing utils display_arg quit_game free_and_error parse_color cub3d init minimap gameplay utils2 raycasting find_intersections render_texture
+FILES		= main parsing utils display_arg display_arg2 quit_game free_and_error \
+				parse_color cub3d init minimap gameplay utils2 raycasting find_intersections \
+				render handle_key load_img
 
 SRC			= $(FILES:=.c)
 OBJ			= $(addprefix $(OBJDIR)/, $(FILES:=.o))
@@ -30,7 +32,7 @@ $(NAME): $(OBJ) $(HEADER) | lib
 	@printf "$(_SUCCESS) $(GREEN)			-> Compiling $(NAME)...\n$(RESET)"
 	@make -C ./libft
 	@make -C ./Minilibx
-	@$(CC) -IMinilibx $(OBJ) $(OPTS) ./Minilibx/libmlx.a -o $(NAME) $(MLX)
+	@$(CC) -IMinilibx $(OBJ) $(OPTS) $(FLAGS) ./Minilibx/libmlx.a -o $(NAME) $(MLX)
 	@printf "$(_SUCCESS) $(GREEN)			-> Finished $(NAME)\n$(RESET)"
 
 $(OBJDIR)/%.o: Sources/%.c $(HEADER)
